@@ -1,0 +1,12 @@
+${PODS_ROOT}/Target Support Files/Pods-AcountTemplete/Pods-AcountTemplete-frameworks.sh
+${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework
+${BUILT_PRODUCTS_DIR}/ENSwiftSideMenu/ENSwiftSideMenu.framework
+${BUILT_PRODUCTS_DIR}/Eureka/Eureka.framework
+${BUILT_PRODUCTS_DIR}/Gifu/Gifu.framework
+${BUILT_PRODUCTS_DIR}/ImagePicker/ImagePicker.framework
+${BUILT_PRODUCTS_DIR}/Instructions/Instructions.framework
+${BUILT_PRODUCTS_DIR}/NumberMorphView/NumberMorphView.framework
+${BUILT_PRODUCTS_DIR}/SnapKit/SnapKit.framework
+${BUILT_PRODUCTS_DIR}/Spring/Spring.framework
+${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework
+${BUILT_PRODUCTS_DIR}/TextFieldEffects/TextFieldEffects.framework
