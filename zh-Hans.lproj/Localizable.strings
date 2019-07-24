@@ -1,0 +1,9 @@
+/* 
+  Localizable.strings
+  AcountTemplete
+
+  Created by Wallance on 2019/7/19.
+  Copyright © 2019 Wallance. All rights reserved.
+*/
+topic = "话题";
+comment = "评论";

@@ -3,16 +3,24 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
 		051C10D622E1718C00C814DF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C10D522E1718C00C814DF /* AppDelegate.swift */; };
-		051C10D822E1718C00C814DF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C10D722E1718C00C814DF /* ViewController.swift */; };
+		051C10D822E1718C00C814DF /* SignInViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C10D722E1718C00C814DF /* SignInViewController.swift */; };
 		051C10DB22E1718C00C814DF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 051C10D922E1718C00C814DF /* Main.storyboard */; };
 		051C10DD22E1718E00C814DF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 051C10DC22E1718E00C814DF /* Assets.xcassets */; };
 		051C10E022E1718E00C814DF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 051C10DE22E1718E00C814DF /* LaunchScreen.storyboard */; };
 		051C10EB22E1718F00C814DF /* AcountTempleteTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 051C10EA22E1718F00C814DF /* AcountTempleteTests.swift */; };
+		054E1C3C22E216E300559DEC /* UIImageExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E1C3B22E216E300559DEC /* UIImageExt.swift */; };
+		054E1C4022E21A2B00559DEC /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 054E1C4222E21A2B00559DEC /* Localizable.strings */; };
+		054E1C4622E21BC200559DEC /* UIUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E1C4522E21BC200559DEC /* UIUtils.swift */; };
+		054E1C4822E2295300559DEC /* NetworkUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E1C4722E2295300559DEC /* NetworkUtils.swift */; };
+		054E1C4A22E2319A00559DEC /* UserDefaultExt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E1C4922E2319A00559DEC /* UserDefaultExt.swift */; };
+		054E1C4C22E2A46900559DEC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E1C4B22E2A46900559DEC /* SignUpViewController.swift */; };
+		054E1C4D22E730FB00559DEC /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E1C4B22E2A46900559DEC /* SignUpViewController.swift */; };
+		054E1C4F22E7E7F200559DEC /* AppNavigationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 054E1C4E22E7E7F200559DEC /* AppNavigationController.swift */; };
 		63F9A5EBF4BFBBF741F881DD /* Pods_AcountTemplete.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E72C0E31454882C9ADF3AA9F /* Pods_AcountTemplete.framework */; };
 		D7D42369E7F6C693BAAA28C7 /* Pods_AcountTempleteTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0453607BAE5D70018B9C912 /* Pods_AcountTempleteTests.framework */; };
 /* End PBXBuildFile section */
@@ -30,7 +38,7 @@
 /* Begin PBXFileReference section */
 		051C10D222E1718C00C814DF /* AcountTemplete.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AcountTemplete.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		051C10D522E1718C00C814DF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		051C10D722E1718C00C814DF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		051C10D722E1718C00C814DF /* SignInViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignInViewController.swift; sourceTree = "<group>"; };
 		051C10DA22E1718C00C814DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		051C10DC22E1718E00C814DF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		051C10DF22E1718E00C814DF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -38,6 +46,15 @@
 		051C10E622E1718F00C814DF /* AcountTempleteTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AcountTempleteTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		051C10EA22E1718F00C814DF /* AcountTempleteTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AcountTempleteTests.swift; sourceTree = "<group>"; };
 		051C10EC22E1718F00C814DF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		054E1C3B22E216E300559DEC /* UIImageExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIImageExt.swift; sourceTree = "<group>"; };
+		054E1C3D22E219D800559DEC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		054E1C4122E21A2B00559DEC /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		054E1C4322E21A3300559DEC /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Localizable.strings"; sourceTree = "<group>"; };
+		054E1C4522E21BC200559DEC /* UIUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIUtils.swift; sourceTree = "<group>"; };
+		054E1C4722E2295300559DEC /* NetworkUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUtils.swift; sourceTree = "<group>"; };
+		054E1C4922E2319A00559DEC /* UserDefaultExt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultExt.swift; sourceTree = "<group>"; };
+		054E1C4B22E2A46900559DEC /* SignUpViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		054E1C4E22E7E7F200559DEC /* AppNavigationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppNavigationController.swift; sourceTree = "<group>"; };
 		2ABB966C5C411AC52B446010 /* Pods-AcountTemplete.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcountTemplete.release.xcconfig"; path = "Target Support Files/Pods-AcountTemplete/Pods-AcountTemplete.release.xcconfig"; sourceTree = "<group>"; };
 		41B20B4B5B6859995D31569B /* Pods-AcountTempleteTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-AcountTempleteTests.debug.xcconfig"; path = "Target Support Files/Pods-AcountTempleteTests/Pods-AcountTempleteTests.debug.xcconfig"; sourceTree = "<group>"; };
 		B0453607BAE5D70018B9C912 /* Pods_AcountTempleteTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_AcountTempleteTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -69,6 +86,9 @@
 		051C10C922E1718C00C814DF = {
 			isa = PBXGroup;
 			children = (
+				054E1C4422E21BA700559DEC /* Utils */,
+				054E1C4222E21A2B00559DEC /* Localizable.strings */,
+				054E1C3A22E216D000559DEC /* Ext */,
 				051C10D422E1718C00C814DF /* AcountTemplete */,
 				051C10E922E1718F00C814DF /* AcountTempleteTests */,
 				051C10D322E1718C00C814DF /* Products */,
@@ -90,11 +110,13 @@
 			isa = PBXGroup;
 			children = (
 				051C10D522E1718C00C814DF /* AppDelegate.swift */,
-				051C10D722E1718C00C814DF /* ViewController.swift */,
+				051C10D722E1718C00C814DF /* SignInViewController.swift */,
 				051C10D922E1718C00C814DF /* Main.storyboard */,
 				051C10DC22E1718E00C814DF /* Assets.xcassets */,
 				051C10DE22E1718E00C814DF /* LaunchScreen.storyboard */,
 				051C10E122E1718E00C814DF /* Info.plist */,
+				054E1C4B22E2A46900559DEC /* SignUpViewController.swift */,
+				054E1C4E22E7E7F200559DEC /* AppNavigationController.swift */,
 			);
 			path = AcountTemplete;
 			sourceTree = "<group>";
@@ -106,6 +128,24 @@
 				051C10EC22E1718F00C814DF /* Info.plist */,
 			);
 			path = AcountTempleteTests;
+			sourceTree = "<group>";
+		};
+		054E1C3A22E216D000559DEC /* Ext */ = {
+			isa = PBXGroup;
+			children = (
+				054E1C3B22E216E300559DEC /* UIImageExt.swift */,
+				054E1C4922E2319A00559DEC /* UserDefaultExt.swift */,
+			);
+			path = Ext;
+			sourceTree = "<group>";
+		};
+		054E1C4422E21BA700559DEC /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				054E1C4522E21BC200559DEC /* UIUtils.swift */,
+				054E1C4722E2295300559DEC /* NetworkUtils.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		C4A5FF5FCE45D2DC3448C267 /* Frameworks */ = {
@@ -125,7 +165,6 @@
 				41B20B4B5B6859995D31569B /* Pods-AcountTempleteTests.debug.xcconfig */,
 				D34637F0A2BA2D2832700AD3 /* Pods-AcountTempleteTests.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -196,6 +235,7 @@
 			knownRegions = (
 				en,
 				Base,
+				"zh-Hans",
 			);
 			mainGroup = 051C10C922E1718C00C814DF;
 			productRefGroup = 051C10D322E1718C00C814DF /* Products */;
@@ -214,6 +254,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				051C10E022E1718E00C814DF /* LaunchScreen.storyboard in Resources */,
+				054E1C4022E21A2B00559DEC /* Localizable.strings in Resources */,
 				051C10DD22E1718E00C814DF /* Assets.xcassets in Resources */,
 				051C10DB22E1718C00C814DF /* Main.storyboard in Resources */,
 			);
@@ -297,8 +338,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				051C10D822E1718C00C814DF /* ViewController.swift in Sources */,
+				051C10D822E1718C00C814DF /* SignInViewController.swift in Sources */,
+				054E1C4C22E2A46900559DEC /* SignUpViewController.swift in Sources */,
 				051C10D622E1718C00C814DF /* AppDelegate.swift in Sources */,
+				054E1C4822E2295300559DEC /* NetworkUtils.swift in Sources */,
+				054E1C3C22E216E300559DEC /* UIImageExt.swift in Sources */,
+				054E1C4F22E7E7F200559DEC /* AppNavigationController.swift in Sources */,
+				054E1C4A22E2319A00559DEC /* UserDefaultExt.swift in Sources */,
+				054E1C4622E21BC200559DEC /* UIUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -306,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				054E1C4D22E730FB00559DEC /* SignUpViewController.swift in Sources */,
 				051C10EB22E1718F00C814DF /* AcountTempleteTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -325,6 +373,7 @@
 			isa = PBXVariantGroup;
 			children = (
 				051C10DA22E1718C00C814DF /* Base */,
+				054E1C3D22E219D800559DEC /* zh-Hans */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -337,6 +386,15 @@
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
 		};
+		054E1C4222E21A2B00559DEC /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				054E1C4122E21A2B00559DEC /* en */,
+				054E1C4322E21A3300559DEC /* zh-Hans */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
 /* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
@@ -344,6 +402,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -405,6 +464,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -501,6 +561,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QTJ52F6C45;
 				INFOPLIST_FILE = AcountTempleteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -522,6 +583,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = QTJ52F6C45;
 				INFOPLIST_FILE = AcountTempleteTests/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

@@ -6,18 +6,18 @@ target 'AcountTemplete' do
   use_frameworks!
 
   # Pods for AcountTemplete
-  pod 'Alamofire'
-  pod 'SwiftyJSON'
-  pod 'Spring'
   pod 'SnapKit'
-  pod 'ImagePicker'
-  pod 'Instructions'
-  pod 'NumberMorphView'
-  pod 'Eureka'
   pod 'TextFieldEffects'
-  pod 'Gifu'
-  pod 'ENSwiftSideMenu'
-  
+  pod 'Hue'
+  pod 'IBAnimatable'
+  pod 'Material'
+  pod 'SwiftyJSON'
+  pod 'Alamofire'
+  pod 'SwiftyUserDefaults'
+  pod 'SCLAlertView'
+  pod 'RxSwift'
+  pod 'RxCocoa'
+  pod 'Eureka'
   target 'AcountTempleteTests' do
     inherit! :search_paths
     # Pods for testing
