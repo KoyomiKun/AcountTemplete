@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="9Ue-gY-o7Y">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14490.70" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="FcS-gm-qXi">
     <device id="retina6_1" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -10,6 +10,25 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Animatable Navigation Controller-->
+        <scene sceneID="tsE-e0-OMg">
+            <objects>
+                <navigationController id="FcS-gm-qXi" customClass="AnimatableNavigationController" customModule="IBAnimatable" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" backIndicatorImage="cm_arrow_downward_white" id="Dd0-qX-1S3">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <userDefinedRuntimeAttributes>
+                        <userDefinedRuntimeAttribute type="string" keyPath="_transitionAnimationType" value="SystemCube(Right)"/>
+                    </userDefinedRuntimeAttributes>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="IHY-xR-Vsi"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ucE-Mg-kJb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-6" y="110"/>
+        </scene>
         <!--Sign In View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -38,29 +57,68 @@
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <navigationItem key="navigationItem" id="pqw-XK-3SQ"/>
                     <connections>
                         <outlet property="avatarImageView" destination="aQN-xU-dz9" id="pWA-rD-X4j"/>
                         <outlet property="infoView" destination="g4R-VL-g2W" id="TjI-RG-nOI"/>
+                        <segue destination="HpP-LK-jDD" kind="custom" identifier="showMainUserView" customClass="PresentFadeSegue" customModule="IBAnimatable" id="5ls-vI-Dtd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="109.82142857142857"/>
+            <point key="canvasLocation" x="825" y="110"/>
         </scene>
-        <!--Sign Up View Controller-->
-        <scene sceneID="D58-RP-SHg">
+        <!--Left Control View Controller-->
+        <scene sceneID="wKG-wd-5aU">
             <objects>
-                <viewController id="9Ue-gY-o7Y" customClass="SignUpViewController" customModule="AcountTemplete" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="4nb-jD-K9M">
+                <viewController id="Tpu-68-M3b" customClass="LeftControlViewController" customModule="AcountTemplete" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="xqO-YU-bYJ">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                        <viewLayoutGuide key="safeArea" id="CPq-Xg-2yx"/>
+                        <viewLayoutGuide key="safeArea" id="br2-Kn-7r9"/>
                     </view>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="ql9-kA-ZxO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="b53-4z-qhq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-674" y="110"/>
+            <point key="canvasLocation" x="1657" y="-549"/>
+        </scene>
+        <!--Reveal View Controller-->
+        <scene sceneID="qPb-lr-v6c">
+            <objects>
+                <viewController id="HpP-LK-jDD" customClass="SWRevealViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Mp8-ck-cnn">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="Wi0-25-ySt"/>
+                    </view>
+                    <connections>
+                        <segue destination="gZC-lW-H7Q" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="ue5-qJ-2ob"/>
+                        <segue destination="Tpu-68-M3b" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="39v-ov-FoW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hMu-D4-Hq2" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1655" y="110"/>
+        </scene>
+        <!--Charts View Controller-->
+        <scene sceneID="Bpu-cg-Rsi">
+            <objects>
+                <viewController id="gZC-lW-H7Q" customClass="ChartsViewController" customModule="AcountTemplete" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="iU8-VQ-ZyQ">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <viewLayoutGuide key="safeArea" id="SN7-b2-G28"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Fz4-C6-D3M" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2375" y="110"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cm_arrow_downward_white" width="24" height="24"/>
+    </resources>
 </document>

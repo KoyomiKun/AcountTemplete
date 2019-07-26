@@ -30,4 +30,5 @@ class UIUtils {
     public static func commonFont(size:CGFloat)->UIFont{
         return UIFont(name: "Avenir Next Condensed", size: size)!
     }
+   
 }

@@ -26,13 +26,92 @@ class SignInViewController: UIViewController {
     
     var changePhoneNumber:Disposable!
     
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = true
+    }
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = false
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         // Set gesture for keyboard dismissing
         let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismisskeyboard))
         self.view.addGestureRecognizer(tap)
+        // add constraints
+        setConstraint()
+        // observe phone number and change the avatar
+        changePhoneNumber = userNameTextField.rx.text.orEmpty.asObservable()
+            .subscribe(onNext: {
+                self.changeAvatar(phoneNumber:$0)
+            })
+    }
+    func changeAvatar(phoneNumber:String){
         
+        NetworkUtils.getRequest(method: "/account/getAvatar/" + phoneNumber, parameters: nil, header: nil).responseJSON(completionHandler: {
+            response in
+            if response.result.isSuccess{
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    if json["code"].int == 200 {
+                        let url = URL(string: json["data"]["avatar"].string!)
+                        do{
+                            let data = try Data(contentsOf: url!)
+                            self.avatarImageView.image = UIImage(data: data)?.toCircle()
+                        }catch let error as NSError{
+                            print(error)
+                        }
+                    }else{
+                        self.avatarImageView.image = UIImage(named: "avatar")?.toCircle()
+                    }
+                }
+            }
+        })
+    }
+    @objc func dismisskeyboard(){
+        self.view.endEditing(true)
+    }
+    @objc func touchSignIn(){
+        let parameters:Parameters = ["password": passwordTextField.text!,"phone":userNameTextField.text!]
+        NetworkUtils.postRequest(method: "/account/common/login", parameters: parameters, header: nil).responseJSON(completionHandler: {
+            response in
+            if response.result.isSuccess{
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    if json["code"].int == 200 {
+                        Defaults[.username] = json["data"]["userInfo"]["username"].string
+                        Defaults[.password] = self.passwordTextField.text!
+                        Defaults[.avatar] = json["data"]["userInfo"]["avatar"].string
+                        Defaults[.phoneNumber] = json["data"]["userInfo"]["phoneNumber"].string
+                        Defaults[.token] = json["data"]["token"].string
+                        let alert = SCLAlertView(appearance: UIUtils.appearance)
+                        alert.addButton("OK", action: {
+                            self.changePhoneNumber.dispose()
+                            self.performSegue(withIdentifier: "showMainUserView", sender: nil)
+                        })
+                        alert.showSuccess("Welcome", subTitle: "Sign in Success")
+                    }else{
+                        let alert = SCLAlertView(appearance: UIUtils.appearance)
+                        alert.addButton("OK", action: {
+                            self.passwordTextField.text = ""
+                        })
+                        alert.showError("Sign in Fail", subTitle: "Please check your Phone Number or Password")
+                    }
+                }
+            }else{
+                let alert = SCLAlertView(appearance: UIUtils.appearance)
+                alert.addButton("OK", action: {
+                    self.passwordTextField.text = ""
+                })
+                alert.showError("Network Fail", subTitle: "Please check your network")
+            }
+        })
+    }
+    
+}
+// set the view
+extension SignInViewController{
+    func setConstraint(){
         // Set subView
         infoView.snp.makeConstraints({
             make in
@@ -96,6 +175,7 @@ class SignInViewController: UIViewController {
             make.height.equalTo(40)
             make.width.equalTo(150)
         })
+        signUpButton.addTarget(self, action: #selector(signUp), for: .touchUpInside)
         
         let forgetPasswordButton = FlatButton(title: "Forget password?",titleColor: Color.blue.accent1)
         forgetPasswordButton.titleLabel?.font = UIUtils.commonFont(size: 14)
@@ -107,72 +187,16 @@ class SignInViewController: UIViewController {
             make.height.equalTo(40)
             make.width.equalTo(150)
         })
-        
-        // observe phone number and change the avatar
-        changePhoneNumber = userNameTextField.rx.text.orEmpty.asObservable()
-            .subscribe(onNext: {
-                self.changeAvatar(phoneNumber:$0)
-            })
-    }
-    func changeAvatar(phoneNumber:String){
-        
-        NetworkUtils.getRequest(method: "/account/getAvatar/" + phoneNumber, parameters: nil, header: nil).responseJSON(completionHandler: {
-            response in
-            if response.result.isSuccess{
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    if json["code"].int == 200 {
-                        let url = URL(string: json["data"]["avatar"].string!)
-                        do{
-                            let data = try Data(contentsOf: url!)
-                            self.avatarImageView.image = UIImage(data: data)?.toCircle()
-                        }catch let error as NSError{
-                            print(error)
-                        }
-                    }else{
-                        self.avatarImageView.image = UIImage(named: "avatar")?.toCircle()
-                    }
-                }
-            }
-        })
-    }
-    @objc func dismisskeyboard(){
-        self.view.endEditing(true)
-    }
-    @objc func touchSignIn(){
-        let parameters:Parameters = ["password": passwordTextField.text!,"phone":userNameTextField.text!]
-        NetworkUtils.postRequest(method: "/account/common/login", parameters: parameters, header: nil).responseJSON(completionHandler: {
-            response in
-            if response.result.isSuccess{
-                if let value = response.result.value {
-                    let json = JSON(value)
-                    if json["code"].int == 200 {
-                        Defaults[.username] = json["data"]["userInfo"]["username"].string
-                        Defaults[.password] = self.passwordTextField.text!
-                        Defaults[.avatar] = json["data"]["userInfo"]["avatar"].string
-                        Defaults[.phoneNumber] = json["data"]["userInfo"]["phoneNumber"].string
-                        Defaults[.token] = json["data"]["token"].string
-                        let alert = SCLAlertView(appearance: UIUtils.appearance)
-                        alert.addButton("OK", action: {
-                            self.changePhoneNumber.dispose()
-                        })
-                        alert.showSuccess("Welcome", subTitle: "Sign in Success")
-                    }else{
-                        let alert = SCLAlertView(appearance: UIUtils.appearance)
-                        alert.addButton("OK", action: {
-                            self.passwordTextField.text = ""
-                        })
-                        alert.showError("Sign in Fail", subTitle: "Please check your Phone Number or Password")
-                    }
-                }
-            }else{
-                let alert = SCLAlertView(appearance: UIUtils.appearance)
-                alert.addButton("OK", action: {
-                    self.passwordTextField.text = ""
-                })
-                alert.showError("Network Fail", subTitle: "Please check your network")
-            }
-        })
+        forgetPasswordButton.addTarget(self, action: #selector(forgetPassword), for: .touchUpInside)
     }
 }
+extension SignInViewController:UINavigationControllerDelegate{
+    @objc func signUp(){
+        navigationController?.pushViewController(SignUpViewController(), animated: true)
+    }
+    @objc func forgetPassword(){
+        navigationController?.pushViewController(forgetPasswordViewController(), animated: true)
+    }
+}
+
 

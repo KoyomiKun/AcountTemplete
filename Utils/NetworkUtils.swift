@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 class NetworkUtils{
     
-    static let baseURL:String = "http://101.132.185.90:5418"
+    private static let baseURL:String = "http://101.132.185.90:5418"
     
     static let sharedSessionManager: Alamofire.SessionManager = {
         let configuration = URLSessionConfiguration.default

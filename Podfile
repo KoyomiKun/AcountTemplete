@@ -18,6 +18,10 @@ target 'AcountTemplete' do
   pod 'RxSwift'
   pod 'RxCocoa'
   pod 'Eureka'
+  pod 'mob_smssdk'
+  pod 'SWRevealViewController'
+
+  
   target 'AcountTempleteTests' do
     inherit! :search_paths
     # Pods for testing

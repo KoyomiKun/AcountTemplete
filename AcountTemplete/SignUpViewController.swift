@@ -10,106 +10,203 @@ import UIKit
 import Eureka
 import SnapKit
 import Material
-class SignUpViewController: FormViewController {
-    let transController = TransitionController()
-    
+import SwiftyJSON
+import Alamofire
+import SCLAlertView
+import RxCocoa
+import RxSwift
+
+class SignUpViewController: FormViewController{
     var backButton:IconButton!
-    
+    var countDownDisposable:Disposable!
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismisskeyboard))
+        self.view.addGestureRecognizer(tap)
         rowKeyboardSpacing = 20
-        
+        navigationController?.navigationBar.topItem?.title = ""
+        setForm()
+    }
+}
+// set form
+extension SignUpViewController{
+    func setForm(){
         form +++ Section("")
-            <<< TextRow(){
+            <<< TextRow("username"){
                 row in
                 row.title = "User name"
                 }.cellSetup({
                     cell,row in
                     cell.titleLabel?.font = UIUtils.commonFont(size: 20)
                 })
-            <<< PasswordRow(){
+            <<< PasswordRow("password"){
                 row in
                 row.title = "Password"
                 }.cellSetup({
                     cell,row in
                     cell.titleLabel?.font = UIUtils.commonFont(size: 20)
                 })
-            <<< PasswordRow(){
+            <<< PasswordRow("confirmPassword"){
                 row in
                 row.title = "Confirm Password"
                 }.cellSetup({
                     cell,row in
                     cell.titleLabel?.font = UIUtils.commonFont(size: 20)
                 })
-            +++ Section("")
-            <<< SegmentedRow<String>().cellSetup({
+            +++ Section("", {
+                section in
+                section.tag = "phoneInfo"
+                section.hidden = Condition.function(["password","confirmPassword","username"], { form in
+                    let password = (form.rowBy(tag: "password") as? PasswordRow)?.value
+                    let confirmPassword = (form.rowBy(tag: "confirmPassword") as? PasswordRow)?.value
+                    if password != confirmPassword || password == nil ||  (form.rowBy(tag: "username") as? TextRow)?.value == nil{
+                        self.form.rowBy(tag: "confirm")?.baseCell.tintColor = Color.grey.lighten1
+                        return true
+                    }
+                    self.form.rowBy(tag: "confirm")?.baseCell.tintColor = Color.blue.accent2
+                    return false
+                })
+            })
+            <<< SegmentedRow<String>("type").cellSetup({
                 cell,row in
                 row.options = ["family","common"]
                 row.title = "Account type          "
                 cell.titleLabel?.font = UIUtils.commonFont(size: 20)
             })
-            <<< PhoneRow(){
+            <<< PhoneRow("phone"){
                 row in
                 row.title = "Phone number"
                 }.cellSetup({
                     cell,row in
                     cell.titleLabel?.font = UIUtils.commonFont(size: 20)
                 })
-            <<< PhoneRow(){
+            <<< PhoneRow("code"){
                 row in
                 row.title = "Verification Code"
                 }.cellSetup({
                     cell,row in
                     cell.titleLabel?.font = UIUtils.commonFont(size: 20)
                 })
-            <<< ButtonRow().cellSetup({
+            <<< ButtonRow("sendMessage").cellSetup({
                 cell,row in
                 cell.textLabel?.font = UIUtils.commonFont(size: 20)
+                cell.tintColor = Color.blue.accent2
                 row.title = "Send message"
+            }).onCellSelection({
+                cell,row in
+                let phone = (self.form.rowBy(tag: "phone") as? PhoneRow)?.value
+                if phone != nil && cell.tintColor == Color.blue.accent2{
+                    self.sendMessage(phone:phone!)
+                }
             })
-            <<< ButtonRow().cellSetup({
+            +++ Section("")
+            <<< ButtonRow("confirm").cellSetup({
                 cell,row in
                 cell.textLabel?.font = UIUtils.commonFont(size: 20)
+                cell.tintColor = Color.grey.lighten1
                 row.title = "Confirm"
+            }).onCellSelection({
+                cell,row  in
+                if cell.tintColor == Color.grey.lighten1
+                {}else{
+                    self.confirmCode()
+                }
             })
-        
-        
-//        let sendMessageButton = FlatButton(title: "Send Message",titleColor: Color.blue.accent2)
-//        sendMessageButton.titleLabel?.font = UIUtils.commonFont(size: 20)
-//        view.addSubview(sendMessageButton)
-//        sendMessageButton.snp.makeConstraints({
-//            make in
-//            make.right.equalToSuperview()
-//            make.left.equalTo(view.snp.centerX).offset(20)
-//            make.top.equalTo(278)
-//        })
-//
-//        let confirmButton = FlatButton(title: "Confirm",titleColor: Color.white)
-//        confirmButton.titleLabel?.font = UIUtils.commonFont(size: 20)
-//        view.addSubview(confirmButton)
-//        confirmButton.backgroundColor = Color.blue.accent2
-//        confirmButton.layer.cornerRadius = 20
-//        confirmButton.snp.makeConstraints({
-//            make in
-//            make.centerX.equalToSuperview()
-//            make.bottom.equalTo(view.snp.bottom).offset(-250)
-//            make.width.equalTo(350)
-//        })
-        backButton = IconButton(image: Icon.cm.arrowBack)
-        
     }
-
+    @objc func dismisskeyboard(){
+        self.view.endEditing(true)
+    }
+    func register(){
+        let type = (self.form.rowBy(tag: "type") as? SegmentedRow<String>)?.value
+        var typeIsFamily = true
+        switch type {
+        case "family":
+            typeIsFamily = true
+        case "common":
+            typeIsFamily = false
+        default:
+            let alert = SCLAlertView(appearance: UIUtils.appearance)
+            alert.addButton("OK", action: {})
+            alert.showWarning("Register Fail", subTitle: "Please choose an account type")
+            return
+        }
+        let username = (self.form.rowBy(tag: "username") as? TextRow)?.value
+        let password = (self.form.rowBy(tag: "password") as? PasswordRow)?.value
+        let phonenumber = (self.form.rowBy(tag: "phone") as? PhoneRow)?.value
+        let para:Parameters = ["password": password!,
+                               "phone": phonenumber!,
+                               "username": username!]
+        NetworkUtils.postRequest(method: typeIsFamily ? "/account/family/register" : "/account/common/register" , parameters: para, header: nil).responseJSON(completionHandler: {
+            response in
+            let alert = SCLAlertView(appearance: UIUtils.appearance)
+            if response.result.isSuccess{
+                if let value = response.result.value {
+                    let json = JSON(value)
+                    if json["code"].int == 200 {
+                        alert.addButton("OK", action: {
+                            self.navigationController?.popViewController(animated: true)
+                        })
+                        alert.showSuccess("Rigister Success", subTitle: "Please Sign in")
+                    }else{
+                        alert.addButton("OK", action: {})
+                        alert.showError("Rigister Fail", subTitle: json["message"].string!)
+                    }
+                }
+            }else{
+                alert.addButton("OK", action: {})
+                alert.showError("Rigister Fail", subTitle: "Please check your network")
+            }
+        })
+    }
     
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
+    func confirmCode(){
+        let phone = (self.form.rowBy(tag: "phone") as? PhoneRow)?.value
+        let code = (self.form.rowBy(tag: "code") as? PhoneRow)?.value
+        if code == nil {
+            return
+        }
+        SMSSDK.commitVerificationCode(code!, phoneNumber: phone!, zone: "86", result: {
+            error in
+            if error == nil{
+                self.register()
+            }else{
+                let alert = SCLAlertView(appearance: UIUtils.appearance)
+                alert.addButton("OK", action: {
+                    (self.form.rowBy(tag: "code") as? PhoneRow)?.cell.textField.text = ""
+                })
+                alert.showError("Rigister Fail", subTitle: "Please check your verification code")
+            }
+        })
     }
-    */
+    
+    func sendMessage(phone:String){
+        SMSSDK.getVerificationCode(by: .SMS, phoneNumber: phone, zone: "86", result: {
+            error in
+            if error == nil{
+                let countDownSeconds = 30
+                let button = (self.form.rowBy(tag: "sendMessage") as? ButtonRow)?.cell
+                button?.tintColor = Color.grey.lighten1
+                self.countDownDisposable = Observable<Int>.interval(1, scheduler: MainScheduler.instance)
+                    .map { countDownSeconds - $0 }
+                    .do(onNext: { second in
+                        if second == 0 {
+                            button?.textLabel?.tintColor = Color.blue.accent2
+                            button?.textLabel?.text = "Send Message"
+                            self.countDownDisposable.dispose()
+                        }
+                    })
+                    .subscribe(onNext: { second in
+                        button?.textLabel?.text = "\(second)s"
+                    })
+            }else{
+                let alert = SCLAlertView(appearance: UIUtils.appearance)
+                alert.addButton("OK", action: {
+                    (self.form.rowBy(tag: "phone") as? PhoneRow)?.cell.textField.text = ""
+                })
+                alert.showError("Can't send message", subTitle: "Please check your phone number")
 
+            }
+            
+        })
+    }
 }
