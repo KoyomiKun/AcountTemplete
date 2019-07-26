@@ -17,12 +17,9 @@ import RxCocoa
 import RxSwift
 
 class SignUpViewController: FormViewController{
-    var backButton:IconButton!
     var countDownDisposable:Disposable!
     override func viewDidLoad() {
         super.viewDidLoad()
-        let tap = UITapGestureRecognizer(target: self, action: #selector(self.dismisskeyboard))
-        self.view.addGestureRecognizer(tap)
         rowKeyboardSpacing = 20
         navigationController?.navigationBar.topItem?.title = ""
         setForm()
@@ -163,6 +160,11 @@ extension SignUpViewController{
         let phone = (self.form.rowBy(tag: "phone") as? PhoneRow)?.value
         let code = (self.form.rowBy(tag: "code") as? PhoneRow)?.value
         if code == nil {
+            let alert = SCLAlertView(appearance: UIUtils.appearance)
+            alert.addButton("OK", action: {
+                (self.form.rowBy(tag: "code") as? PhoneRow)?.cell.textField.text = ""
+            })
+            alert.showError("Rigister Fail", subTitle: "Please check your verification code")
             return
         }
         SMSSDK.commitVerificationCode(code!, phoneNumber: phone!, zone: "86", result: {
@@ -190,7 +192,7 @@ extension SignUpViewController{
                     .map { countDownSeconds - $0 }
                     .do(onNext: { second in
                         if second == 0 {
-                            button?.textLabel?.tintColor = Color.blue.accent2
+                            button?.tintColor = Color.blue.accent2
                             button?.textLabel?.text = "Send Message"
                             self.countDownDisposable.dispose()
                         }

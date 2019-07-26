@@ -92,7 +92,7 @@ class forgetPasswordViewController: FormViewController {
                     .map { countDownSeconds - $0 }
                     .do(onNext: { second in
                         if second == 0 {
-                            button?.textLabel?.tintColor = Color.blue.accent2
+                            button?.tintColor = Color.blue.accent2
                             button?.textLabel?.text = "Send Message"
                             self.countDownDisposable.dispose()
                         }
